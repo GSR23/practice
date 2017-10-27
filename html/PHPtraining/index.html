@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<head>
+
+  <style type="text/css">
+    .form {
+      text-align: center;
+      padding-top: 20%
+    }
+
+    .inputForm {
+      border-radius: 5px;
+    }
+
+    .home {
+
+      text-align: center;
+      position: absolute;
+      top: 50%;
+    }
+
+    .wrapper {
+      text-align: center;
+    }
+
+    .button {
+      /*position: absolute;*/
+      border-radius: 5px;
+      margin-left: 0;
+    }
+  </style>
+  <title>Validate Wizard</title>
+  <link rel="shortcut icon" href="Wizard.ico" type="image/x-icon">
+</head>
+
+
+<form class="form" action="validate.php" method="post">
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="password" class="inputForm" id="password" name="password">
+  <input type="submit" class="inputForm" name="submit" value="Submit"><br><br>
+</form>
+
+<div class="wrapper">
+  <button onclick="window.location.href='../'" class="button">Go Back to Home</button>
+</div>
