@@ -1,3 +1,3 @@
-# practice
+# Practice
 
 This is for My Own Practice
