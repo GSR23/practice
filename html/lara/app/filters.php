@@ -43,6 +43,7 @@ Route::filter('auth', function()
 		}
 		else
 		{
+			Session::flash('auth','Please Login First');
 			return Redirect::guest('login');
 		}
 	}
@@ -67,7 +68,9 @@ Route::filter('auth.basic', function()
 
 Route::filter('guest', function()
 {
-	if (Auth::check()) return Redirect::to('/');
+	if (Auth::check())
+		Session::flash('auth','Please Be My Guest');
+		return Redirect::to('blog');
 });
 
 /*

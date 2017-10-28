@@ -2,6 +2,13 @@
 // use Test;
 class TestController extends \BaseController {
 
+	public function __construct()
+	    {
+				$this->beforeFilter('auth',['except' =>'index']);
+				$this->beforeFilter('csrf',['only' => ['store','update']]);
+			}
+
+
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -11,14 +18,14 @@ class TestController extends \BaseController {
 	{
 		//Display Home Page
 		$d_index = Test::orderBy('created_at', 'desc')->take(2)->get();    //paginate(2);
-		return View::make('home', array('d_index' => $d_index));
+		return View::make('posts.home', array('d_index' => $d_index));
 	}
 
 	public function show_posts()
 	{
 		//Display all Postes
 		$d_show_posts = Test::orderBy('created_at', 'desc')->paginate(4);   // (While using paginate no need of get())
-		return View::make('posts_show', array('d_show_posts' => $d_show_posts));
+		return View::make('posts.posts_show', array('d_show_posts' => $d_show_posts));
 
 	}
 
@@ -31,7 +38,7 @@ class TestController extends \BaseController {
 	public function create()
 	{
 		//To Create Data
-		return View::make('post_create');
+		return View::make('posts.post_create');
 	}
 
 
@@ -60,6 +67,7 @@ class TestController extends \BaseController {
 		// Store into database
 		$d_store= new Test;
 		$d_store->title = Input::get('title');
+		// $d_store->user = Auth::user()->username;
 		$d_store->body = Input::get('body');
 
 		$d_store->save();
@@ -79,7 +87,7 @@ class TestController extends \BaseController {
 	{
 		//Show Specific Posts
 		$d_show= Test::find($id);
-		return View::make('post_show', array('d_show' => $d_show));
+		return View::make('posts.post_show', array('d_show' => $d_show));
 	}
 
 
@@ -93,7 +101,7 @@ class TestController extends \BaseController {
 	{
 		//Logic to edit
 		$d_edit= Test::find($id);
-		return View::make('post_edit', array('d_edit' => $d_edit));
+		return View::make('posts.post_edit', array('d_edit' => $d_edit));
 	}
 
 
@@ -122,7 +130,7 @@ class TestController extends \BaseController {
 		$d_update->save();
 		//Flashing Sucess Alert
 		Session::flash('success','The Blog Post is Sucessfully Updated');
-		return View::make('post_show', array('d_show' => $d_update));
+		return View::make('posts.post_show', array('d_show' => $d_update));
 	}
 	}
 

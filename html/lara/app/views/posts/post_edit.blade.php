@@ -3,6 +3,7 @@
 
 @section('content')
   <form action="/lara/public/blog/{{ $d_edit['id'] }}" method="post">
+    <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}">
   <div class="form-group">
     <label class="col-form-label" for="title">Title</label>
     <input type="text" class="form-control" id="title" name="title" value="{{ $d_edit['title'] }}">
