@@ -1,6 +1,6 @@
 <?php
-// use Test;
-class TestController extends \BaseController {
+// use Post;
+class PostController extends \BaseController {
 
 	public function __construct()
 	    {
@@ -17,14 +17,14 @@ class TestController extends \BaseController {
 	public function index()
 	{
 		//Display Home Page
-		$d_index = Test::orderBy('created_at', 'desc')->take(2)->get();    //paginate(2);
+		$d_index = Post::orderBy('created_at', 'desc')->take(2)->get();    //paginate(2);
 		return View::make('posts.home', array('d_index' => $d_index));
 	}
 
 	public function show_posts()
 	{
 		//Display all Postes
-		$d_show_posts = Test::orderBy('created_at', 'desc')->paginate(4);   // (While using paginate no need of get())
+		$d_show_posts = Post::orderBy('created_at', 'desc')->paginate(4);   // (While using paginate no need of get())
 		return View::make('posts.posts_show', array('d_show_posts' => $d_show_posts));
 
 	}
@@ -38,7 +38,8 @@ class TestController extends \BaseController {
 	public function create()
 	{
 		//To Create Data
-		return View::make('posts.post_create');
+		$c_cat = Category::all();
+		return View::make('posts.post_create',array('c_cat' => $c_cat));
 	}
 
 
@@ -56,7 +57,8 @@ class TestController extends \BaseController {
 		// );
 		$validator = Validator::make(Input::all(),[
 			'title' => 'required|max:255',
-			'body' => 'required'
+			'body' => 'required',
+			'cat_select' =>'required|numeric'
 		]);
 		if ($validator->fails())
 		{
@@ -65,14 +67,16 @@ class TestController extends \BaseController {
 		{
 		// return Input::all();
 		// Store into database
-		$d_store= new Test;
+		$d_store= new Post;
 		$d_store->title = Input::get('title');
 		// $d_store->user = Auth::user()->username;
 		$d_store->body = Input::get('body');
+		$d_store->category_id = Input::get('cat_select');
+		$d_store->user_id = Auth::user()->id;
 
 		$d_store->save();
 		Session::flash('success','The Blog Post is Sucessfully Saved');
-		return Redirect::route('blog.all.posts');
+		return Redirect::route('blog.show',$d_store->id);
 	}
 	}
 
@@ -86,8 +90,11 @@ class TestController extends \BaseController {
 	public function show($id)
 	{
 		//Show Specific Posts
-		$d_show= Test::find($id);
+		$d_show= Post::find($id);
+		// return $d_show;
+		// $view = View::make('greeting')->withName('steve');
 		return View::make('posts.post_show', array('d_show' => $d_show));
+		// return View::make('posts.post_show')->withD_show($d_show);
 	}
 
 
@@ -100,7 +107,7 @@ class TestController extends \BaseController {
 	public function edit($id)
 	{
 		//Logic to edit
-		$d_edit= Test::find($id);
+		$d_edit= Post::find($id);
 		return View::make('posts.post_edit', array('d_edit' => $d_edit));
 	}
 
@@ -123,7 +130,7 @@ class TestController extends \BaseController {
 			return Redirect::back()->withErrors($validator);
 	 	}else{
 		//Logic to Update the Data in DB
-		$d_update= Test::find($id);
+		$d_update= Post::find($id);
 		$d_update->title = Input::get('title');
 		$d_update->body = Input::get('body');
 
@@ -143,10 +150,10 @@ class TestController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		$d_delete = Test::find($id);
+		$d_delete = Post::find($id);
 		$d_delete->delete();
 		Session::flash('success','The Blog Post is Sucessfully Deleted');
-		return Redirect::route('blog.all.posts');
+		return Redirect::route('blog');
 	}
 
 

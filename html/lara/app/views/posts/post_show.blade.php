@@ -1,26 +1,32 @@
-@extends('layouts.master')
-@section('title', '| ViewPost')
+@extends('layouts.master') @section('title', '| ViewPost')
+
 
 @section('content')
+{{-- {{ $d_show->id }} --}}
+<div class="blog-post">
 
-  <div class="blog-post">
-    <h2 class="blog-post-title">{{ $d_show['title'] }}</h2>
-    <p class="blog-post-meta">{{ $d_show['created_at']->toDayDateTimeString(); }} by <a href="#">Rakesh</a></p>
-        {{ $d_show['body'] }}
+  <h2 class="blog-post-title">{{ $d_show['title'] }}</h2>
+  <p class="blog-post-meta">{{ $d_show['created_at']->toDayDateTimeString(); }} by <a href="#">{{ $d_show->user->name}}</a></p>
+  <p><span class="blog-post-meta">Belongs To: &nbsp;</span>{{ $d_show->category->name }}</p>
+  <div style="text-align:justify; text-indent:30px;">{{ $d_show['body'] }}</div>
+
+  <div class="form-row">
+    @include('comments.post_comment')
   </div>
-  <form class="form-group" action="/lara/public/blog/{{ $d_show['id']}}/edit" method="put">
-    <button type="submit" class="btn btn-primary">Edit</button>
-    <a href="{{ route('blog.all.posts')}}"><button type="button" class="btn btn-dark" name="submit"><< All Posts</button></a>
-  </form>
+</div>
 
-
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">
-  Delete
+<form class="form-group" action="/lara/public/blog/{{ $d_show['id']}}/edit" method="get">
+  <button type="submit" class="btn btn-primary">Edit</button>
+  <a href="{{ route('blog.all.posts')}}"><button type="button" class="btn btn-dark" name="submit"><< All Posts</button></a>
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete">
+        Delete
 </button>
+</form>
 
+@include('comments.show_comments')
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="delete" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -42,13 +48,5 @@
     </div>
   </div>
 </div>
-
-
-
-  {{-- <button type="submit" class="btn btn-primary" name="submit">Edit</button><br><br> --}}
-  {{-- <button type="submit" class="btn btn-danger" name="submit">Delete</button> --}}
-
-
-
 
 @endsection

@@ -51,7 +51,7 @@ class UserController extends \BaseController {
 		}
 		else {
 			Session::flash('fail','Something went wrong, Please try Again');
-			return Redirect::route('blog.login');
+			return Redirect::route('login');
 		}
 
 	}
@@ -81,7 +81,7 @@ class UserController extends \BaseController {
 
 		$d_signup->save();
 		Session::flash('success','User Created Sucessfully');
-		return Redirect::route('blog.login');
+		return Redirect::route('blog.index');
 	}
 }
 

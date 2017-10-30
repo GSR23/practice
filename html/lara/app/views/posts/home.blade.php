@@ -6,7 +6,7 @@
 
   <div class="blog-post">
     <h2 class="blog-post-title">{{ $d_index_single['title'] }}</h2>
-    <p class="blog-post-meta">{{ $d_index_single['created_at']->toDayDateTimeString(); }} by <a href="#" class="text-info">Rakesh</a></p>
+    <p class="blog-post-meta">{{ $d_index_single['created_at']->toDayDateTimeString(); }} by <a href="#" class="text-info">{{ $d_index_single->user->name }}</a></p>
         @if (strlen($d_index_single['body']) > 150)
           {{ substr($d_index_single['body'],0,150).'...'; }} <a href="/lara/public/blog/{{ $d_index_single['id'] }}">read more</a>
         @else

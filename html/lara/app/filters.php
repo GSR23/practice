@@ -70,7 +70,7 @@ Route::filter('guest', function()
 {
 	if (Auth::check())
 		Session::flash('auth','Please Be My Guest');
-		return Redirect::to('blog');
+		return Redirect::to('blog.index');
 });
 
 /*

@@ -19,10 +19,10 @@
         <a class="nav-link" href="{{ route('blog.create')}}">Create</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="{{ route('blog.index')}}">About</a>
+        <a class="nav-link" href="{{ URL::to('about')}}">About</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="{{ route('blog.index')}}">Contact</a>
+        <a class="nav-link" href="{{ URL::to('contact')}}">Contact</a>
       </li>
 
     </ul>
@@ -32,6 +32,7 @@
         <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown08" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Hello, {{ Auth::user()->username; }}!</a>
           <div class="dropdown-menu" aria-labelledby="dropdown08">
             <a class="dropdown-item" href="">Posts</a>
+            <a class="dropdown-item" href="{{ URL::to('categories')}}">Categories</a>
             <a class="dropdown-item" href="{{ URL::to('logout') }}">Logout</a>
         </div>
       </div>
@@ -42,10 +43,10 @@
 
     @else
       <div class="nav-item my-2 my-md-0">
-        <a class="nav-link" href="{{ route('blog.login')}}">Login</a>
+        <a class="nav-link" href="{{ route('login')}}">Login</a>
       </div>
       <div class="nav-item my-2 my-md-0">
-        <a class="nav-link" href="{{ route('blog.signup')}}">SignUp</a>
+        <a class="nav-link" href="{{ route('signup')}}">SignUp</a>
       </div>
 
     @endif
